@@ -12,6 +12,7 @@ library(ggplot2)
 github repo: https://github.com/trembleyjr/lab2
 
 #Question Set I
+
 Question 1: What is the overall number of chocolate bars rated?
 
 ```{r}
@@ -30,6 +31,7 @@ ggplot(choco, aes(x = as.factor(Review.Date))) +
 It appears to trend upwards, but drops off in the last 2 years.
 
 #Question set II
+
 For each of the questions below provide at least one graphic as a basis for your answer.
 
 1. How are ratings distributed? Draw a histogram of ratings and describe it. Don’t forget to mention outliers, if there are any.
@@ -57,13 +59,14 @@ ggplot(choco, aes(x = Rating)) + geom_bar() + facet_wrap(~Company.Location)
 
 ```{r}
 top3 <- dplyr::filter(choco, Company.Location %in% c("U.S.A.", "France", "Canada"))
-ggplot(top3, aes(x = Rating)) + geom_bar() + facet_wrap(~Company.Location)
+ggplot(top3, aes(x = Company.Location, y = Rating)) + geom_boxplot() + coord_flip()
 ```
 
 Despite the fact that the United States has the most bars, it's ratings are similar to countries such as Canada and France, with similar distributions between them.  This implies that there is no correlation between the country and the rating of its bars.
 
 
 #Own Question
+
 1. Do the type of beans/country of bean origin affect the rating of the bars?
 
 ```{r}
@@ -76,4 +79,5 @@ ggplot(choco, aes(x = Broad.Bean.Origin, y = Rating)) + geom_boxplot() + coord_f
 There appears to be no correlation between the bean type or its origin and the rating that the bar gets.  Both of the graphs displayed appear to have similar distributions.  Therefore, neither the bean type or its origin should be used to determine the quality of a bar.
 
 #Workflow
-I began by creating a Github project and importing it into RStudio.
+
+I began by creating a Github project and importing it into RStudio.  Then, I created the RMarkdown file and followed along with the directions, answering the given questions with certain R functions.  After completing the question on determining if the company location had any affect on the rating, I decided I wanted to know if the bean's type or origin had any affect on its rating.  The best way to do this was using a boxplot with the rating and the other variable.  This way, the number of each did not affect the way I viewed the data.  Then I answered my questions based on the data I found.
