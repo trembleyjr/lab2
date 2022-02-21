@@ -1,0 +1,79 @@
+---
+title: "practice2"
+author: "Joseph Trembley"
+date: "2/16/2022"
+output: html_document
+---
+
+```{r}
+choco <- read.csv("https://ds202-at-isu.github.io/labs/data/choco.csv")
+library(ggplot2)
+```
+github repo: https://github.com/trembleyjr/lab2
+
+#Question Set I
+Question 1: What is the overall number of chocolate bars rated?
+
+```{r}
+summary(choco)
+```
+
+There are 1852 chocolate bars in this table.
+
+Question 2: How does the number of ratings depend on the year? Draw a bar chart of the number of reports.
+
+```{r}
+ggplot(choco, aes(x = as.factor(Review.Date))) + 
+  geom_bar() + xlab("Year")
+```
+
+It appears to trend upwards, but drops off in the last 2 years.
+
+#Question set II
+For each of the questions below provide at least one graphic as a basis for your answer.
+
+1. How are ratings distributed? Draw a histogram of ratings and describe it. Don’t forget to mention outliers, if there are any.
+
+```{r}
+ggplot(choco, aes(x = Rating)) + 
+  geom_histogram(binwidth = 0.25)
+```
+
+The ratings are normally distributed with most of the data lying between 2.5 and 4.  There are more outliers in the lower part of the data between 1 - 2.5, but there is at least 1 greater than 4.
+
+2. Do ratings depend on the cocoa percentage of a chocolate bar?
+
+```{r}
+ggplot(choco, aes(x = Cocoa.Pct, y = Rating)) + geom_point()
+```
+
+There appears to be no sort of correlation between the percentage of cocoa in the bar and the rating it gets.
+
+3. How do ratings compare across different company locations? Focus on the three locations with the most ratings:
+```{r}
+ggplot(choco, aes(x = Rating)) + geom_bar() + facet_wrap(~Company.Location)
+```
+
+
+```{r}
+top3 <- dplyr::filter(choco, Company.Location %in% c("U.S.A.", "France", "Canada"))
+ggplot(top3, aes(x = Rating)) + geom_bar() + facet_wrap(~Company.Location)
+```
+
+Despite the fact that the United States has the most bars, it's ratings are similar to countries such as Canada and France, with similar distributions between them.  This implies that there is no correlation between the country and the rating of its bars.
+
+
+#Own Question
+1. Do the type of beans/country of bean origin affect the rating of the bars?
+
+```{r}
+ggplot(choco, aes(x = Bean.Type, y = Rating)) + geom_boxplot() + coord_flip()
+```
+```{r}
+ggplot(choco, aes(x = Broad.Bean.Origin, y = Rating)) + geom_boxplot() + coord_flip()
+```
+
+There appears to be no correlation between the bean type or its origin and the rating that the bar gets.  Both of the graphs displayed appear to have similar distributions.  Therefore, neither the bean type or its origin should be used to determine the quality of a bar.
+
+#Workflow
+I began by creating a Github project and importing it into RStudio.
